@@ -15,6 +15,8 @@ O objetivo é simples: cada tarefa vai para o modelo mais barato que a faz bem. 
 | Intermediária | **Sonnet** (`sonnet`) | Exige julgamento, mas o terreno é conhecido | redigir e-mails, pesquisas simples, analisar planilhas, revisar um texto, montar um post, comparar opções |
 | Estratégica | **Opus** (`opus`) | Erro custa caro, há trade-offs e várias peças que se influenciam | arquitetura de sistemas, planos de negócio, propostas comerciais complexas, decisões estratégicas, precificação, posicionamento |
 
+> Se a sessão já roda no Opus, "rotear para o Opus" quer dizer **fazer na própria sessão**, sem subagente. Subagente só faz sentido para descer de nível (Haiku, Sonnet).
+
 Como decidir nos casos de fronteira:
 
 - **Na dúvida, suba um nível.** Refazer um trabalho mal feito custa mais que a diferença de preço entre modelos.
@@ -49,7 +51,10 @@ Quando o resultado voltar, confira rapidamente se atende ao pedido antes de entr
 **Quando não vale delegar:**
 
 - Se a tarefa é minúscula (uma frase para traduzir, uma pergunta rápida), responda direto: abrir um subagente custa mais que a economia.
-- Se o modelo da sessão atual já é o nível certo, faça você mesmo.
+- Se o modelo da sessão atual já é o nível certo, faça você mesmo. Isso vale sobretudo para o Opus: quando a sessão já roda no Opus, tarefa estratégica se faz aqui, nunca num subagente Opus, que só repetiria o trabalho com custo de briefing a mais.
+- **Se o trabalho depende do contexto da conversa** (decisões tomadas aqui, arquivos já lidos, preferências que o David acabou de dar), faça você mesmo. O subagente começa do zero: o briefing teria de recontar tudo e ele releria os mesmos arquivos, o que costuma custar mais que a diferença de preço entre os modelos. Delegue só o que cabe num briefing curto e autossuficiente: entrada clara, saída clara, poucas regras.
+
+Teste rápido antes de delegar: *"consigo explicar a tarefa ao subagente em poucas linhas, sem resumir esta conversa?"* Se não, faça aqui.
 
 **Quando não há ferramenta Agent (claude.ai, celular):** não dá para trocar de modelo por conta própria. Diga ao David qual modelo escolher no seletor e por quê, numa linha, e siga com o modelo atual se ele preferir.
 
