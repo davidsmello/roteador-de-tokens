@@ -101,6 +101,7 @@ Distribua o trabalho entre modelos. Exemplo, plataforma cloud: pesquisa e coleta
 - Tarefa minúscula (uma frase para traduzir, uma pergunta rápida): responda direto; abrir um subagente custa mais que a economia.
 - Se o modelo da sessão já é o nível certo, faça você mesmo. Sessão no Opus faz tarefa estratégica na própria sessão, nunca num subagente Opus, que só repetiria o trabalho com custo de briefing a mais.
 - Se o trabalho depende do contexto da conversa (decisões tomadas aqui, arquivos já lidos, preferências recentes), faça você mesmo: o subagente começaria do zero e releria tudo, o que costuma custar mais que a diferença de preço.
+- Se um comando de shell resolve a tarefa (contar, listar, ordenar por data, buscar um texto, comparar tamanhos), rode o comando aqui. Um subagente gastaria o briefing, dezenas de milhares de tokens e ainda exigiria conferência, para fazer o que uma chamada faz. Subagente é para **ler conteúdo** em volume (achar uma cláusula em dez arquivos, extrair dados de PDFs), não para inventário.
 
 Teste rápido antes de delegar: *"consigo explicar a tarefa ao subagente em poucas linhas, sem resumir esta conversa?"* Se não, faça aqui.
 
