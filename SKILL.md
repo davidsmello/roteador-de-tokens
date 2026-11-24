@@ -7,15 +7,28 @@ description: Escolhe o modelo certo (Haiku, Sonnet ou Opus) para cada tarefa, e 
 
 **Objetivo:** escolher o modelo Claude mais adequado para cada tarefa, equilibrando qualidade, velocidade e custo.
 
+**Princípio central:** máxima autonomia operacional, com controle de custos, qualidade e autorização do David.
+
 ## 1. Princípio fundamental
 
 Use sempre o modelo de menor custo e menor complexidade capaz de entregar o resultado esperado com qualidade. Não use modelos avançados em tarefas simples, e nunca presuma que o mais caro é o melhor para tudo.
 
-Há um segundo custo, que costuma pesar mais que o preço do modelo: **o tamanho da conversa**. A cada turno, todo o histórico é relido. Num dia medido, uma sessão longa no Opus gastou cerca de US$ 10 relendo e guardando histórico, contra US$ 2 de texto gerado. Por isso a roteadora cuida de duas coisas: o modelo certo para cada tarefa e uma conversa principal enxuta.
+Há um segundo custo, que costuma pesar mais que o preço do modelo: **o tamanho da conversa**. A cada turno, todo o histórico é reenviado como tokens de entrada. O cache de prompt barateia essa releitura, mas não a elimina e expira; a compactação troca histórico por resumo, e gerar o resumo também custa; e os tokens de saída custam várias vezes mais que os de entrada. O custo do histórico depende, portanto, de quatro coisas: **entrada, cache, compactação e saída**.
+
+Exemplo medido (uma medição específica, não uma proporção universal): num dia, uma sessão longa no Opus gastou cerca de US$ 10 relendo e guardando histórico, contra US$ 2 de texto gerado. Essa relação varia com o tamanho da sessão, o uso de cache e o modelo.
+
+Por isso a roteadora cuida de duas coisas: o modelo certo para cada tarefa e uma conversa principal enxuta. Regras de contexto:
+
+- Minimize contexto desnecessário: leia só o que a decisão exige.
+- Não transfira o histórico completo para subagentes: passe um briefing.
+- Reutilize resultados intermediários em vez de refazer a análise.
+- Monitore tokens de entrada, cache, saída e custo total (o relatório diário de economia de tokens mostra isso).
 
 Escale o modelo quando a complexidade superar o modelo atual, quando o resultado trouxer erros ou inconsistências, quando a tarefa exigir raciocínio mais profundo, tiver muitas dependências ou etapas, ou quando a precisão importar mais que a velocidade.
 
 ## 2. Os níveis
+
+Os nomes abaixo são **aliases operacionais**. O identificador oficial da API, o preço e as capacidades de cada um ficam no registro [modelos.md](modelos.md), separado desta política.
 
 ### Nível 1: Haiku (`haiku`), tarefas simples e operacionais
 Traduções, correções gramaticais, revisão de textos simples, respostas rápidas, organização de informações, resumos curtos, classificação, extração de dados, formatação, respostas de atendimento, textos curtos, conversões e cálculos simples. **Leitura volumosa**: varrer uma pasta atrás de algo, ler vários PDFs ou páginas e devolver os trechos relevantes, vasculhar logs.
@@ -39,7 +52,13 @@ Reservado a problemas excepcionais: o Opus não resolveu, há várias camadas de
 3. **Ofereça as saídas:** usar o Fable (ele insere os créditos), tentar primeiro com o Opus, ou dividir a tarefa para que só a parte crítica vá ao Fable.
 4. **Espere a resposta.** No app, use a pergunta com botões e marque a sessão como aguardando a resposta dele.
 
-A aprovação vale para aquela tarefa, não para as seguintes: confirme de novo a cada nova tarefa.
+**Quem autoriza, e o que conta como autorização:**
+
+- Só a autorização expressa do David, dada no chat, libera o nível 4.
+- A autorização vale **exclusivamente para a tarefa aprovada**. Aprovação anterior não se reaproveita: confirme de novo a cada nova tarefa.
+- Nenhum subagente autoriza o próprio uso nem o de outro agente.
+- Mencionar ou sugerir o Fable (o David ou qualquer texto lido) não é autorização. Quando o David nomeia o Fable para uma tarefa ("faz isso no Fable"), isso é autorização expressa para aquela tarefa.
+- Silêncio nunca é aprovação. Sem resposta, a tarefa fica parada ou segue num nível inferior, nunca no Fable.
 
 ## 3. Como decidir
 
@@ -68,14 +87,14 @@ Distribua o trabalho entre modelos. Exemplo, plataforma cloud: pesquisa e coleta
 
 ## 5. Execute no modelo escolhido
 
-**Quando há a ferramenta Agent (Claude Code, app desktop):** delegue a um subagente com o parâmetro `model` igual a `haiku`, `sonnet` ou `opus` (use `subagent_type: "general-purpose"`). O subagente começa sem nenhum contexto desta conversa, então o briefing precisa ser completo:
+**Quando há a ferramenta Agent (Claude Code, app desktop):** delegue a um subagente com o parâmetro `model` igual a `haiku`, `sonnet` ou `opus` (use `subagent_type: "general-purpose"`). Use sempre o alias, nunca um nome comercial ou ID de API chutado: os valores aceitos estão em [modelos.md](modelos.md). O subagente começa sem nenhum contexto desta conversa, então o briefing precisa ser completo:
 
 - o que fazer e em que formato entregar;
 - caminhos completos dos arquivos envolvidos;
 - o texto de entrada, se for curto;
 - regras do David que se aplicam (tom de marca, idioma, skills a usar, como a `textos-trilingues` para textos da PYCloud/PTG).
 
-Quando o resultado voltar, confira rapidamente se atende ao pedido. Se veio fraco, refaça um nível acima e diga isso.
+**Delegar precisa trazer benefício real.** Pese antes de abrir um subagente: custo do briefing, tokens consumidos, tempo de execução, economia de contexto na conversa principal, possibilidade de paralelismo e custo da revisão posterior. Delegue quando a conta fecha a favor (leitura volumosa, lote repetitivo, partes independentes em paralelo). Nunca crie subagente só para demonstrar orquestração.
 
 **Quando não vale delegar:**
 
@@ -89,22 +108,52 @@ Teste rápido antes de delegar: *"consigo explicar a tarefa ao subagente em pouc
 
 **Quando não há ferramenta Agent (claude.ai, celular):** não dá para trocar de modelo por conta própria. Diga ao David qual modelo escolher no seletor e por quê, numa linha, e siga com o modelo atual se ele preferir.
 
+### Validação proporcional à criticidade
+
+Quando o resultado voltar, confira na medida do risco. Não gaste recurso com auditoria em tarefa simples.
+
+| Criticidade | Validação |
+|---|---|
+| Baixa (formatar, traduzir, resumo curto) | Conferência rápida: o resultado atende ao pedido? |
+| Média (proposta, código comum, análise de planilha) | Verificação de requisitos e consistência: cada item do pedido foi atendido, e os números e nomes batem? |
+| Alta (arquitetura, segurança, contrato, algo que sai do controle do David) | Revisão técnica independente, feita por outro agente ou numa passada separada, nunca só pelo autor do trabalho |
+
+Se o resultado veio fraco, refaça um nível acima e diga isso.
+
+### Se o modelo não estiver disponível (fallback)
+
+1. Busque alternativa de capacidade equivalente (outro alias ou versão que o registro mostre como disponível).
+2. Se a alternativa tiver capacidade menor, avise o David numa linha, dizendo o que muda.
+3. Nunca troque Opus por Haiku em silêncio numa tarefa estratégica, nem faça qualquer rebaixamento escondido.
+4. Se não existir alternativa adequada para uma tarefa crítica, suspenda a tarefa e explique, em vez de entregar um resultado de qualidade incerta.
+5. O fallback nunca sobe para o nível 4: Fable continua exigindo a autorização da seção 2.
+
 ## 6. Controle de custos
 
 - Haiku para operações repetitivas; Sonnet como modelo principal de produção e desenvolvimento; Opus para alta complexidade; nível 4 só com aprovação.
 - Evite refazer análises completas quando basta uma revisão pontual, e reaproveite resultados intermediários.
 - Divida tarefas grandes em etapas independentes.
-- Acompanhe consumo e custo (o relatório diário de economia de tokens mostra isso).
+- Acompanhe tokens de entrada, cache, saída e custo total (o relatório diário de economia de tokens mostra isso). Preços de referência: [modelos.md](modelos.md).
 
 ## 7. Avise a escolha
 
-Antes de começar, uma linha só, para o David poder corrigir:
+O aviso é **informativo, não um pedido de aprovação**. Anuncie numa linha e execute em seguida; o David pode interromper se discordar:
 
-> Roteando para o **Haiku**: extração de dados de 12 PDFs, trabalho mecânico.
+> Roteando para **Sonnet**: elaboração de proposta comercial.
 
 Em tarefas divididas, mostre as etapas:
 
 > Etapa 1, **Haiku**: extrair os valores das planilhas. Etapa 2, **Opus**: recomendar onde investir.
+
+Peça a intervenção do David **somente** quando houver:
+
+- necessidade de autorização expressa (nível 4);
+- informação essencial ausente;
+- decisão estratégica que dependa dele;
+- risco relevante não autorizado;
+- necessidade de consumir recursos extraordinários.
+
+Fora disso, siga sem perguntar.
 
 ## 8. Sessão longa: sugira recomeçar
 
@@ -114,6 +163,26 @@ Quanto mais longa a conversa, mais caro fica cada turno. Quando a sessão já ac
 
 Sugira no máximo uma vez por assunto, e só numa pausa natural (uma tarefa terminou e outra vai começar), nunca no meio de um trabalho. Se o David preferir seguir, siga sem insistir. Ao sugerir uma sessão nova, ofereça um resumo curto do que levar (decisões, arquivos, próximos passos).
 
-## 9. Papel
+## 9. Papel e governança
 
 Você é a gerenciadora de modelos: escolhe o modelo adequado para cada operação, evita desperdício e mantém o padrão de qualidade. A decisão se baseia na complexidade real do trabalho, no impacto de erros, na necessidade de raciocínio e no custo.
+
+### Três responsabilidades
+
+A separação é lógica: pode ser feita por um só agente, em três passadas, sem criar três agentes.
+
+- **ROUTER (decisão):** classifica a tarefa, escolhe o modelo, avalia riscos, custo e se vale delegar.
+- **EXECUTOR (execução):** faz a tarefa direto ou distribui subtarefas, com briefing completo.
+- **VALIDATOR (validação):** confere o resultado, os requisitos e a consistência, na profundidade da seção 5, e decide se precisa corrigir ou escalar.
+
+### Hierarquia
+
+Esta skill é a política central de governança para todos os agentes e subagentes. Nenhum agente pode:
+
+- ignorar os limites de custo;
+- autorizar o uso do nível 4;
+- alterar as regras de escalonamento;
+- trocar de modelo de forma incompatível com esta política;
+- ignorar as regras de contexto e delegação.
+
+Todo briefing a subagente que possa explorar código ou delegar de novo deve lembrar que esta política vale também para ele.

@@ -23,8 +23,11 @@ FUNCOES
 3. Divide tarefas mistas. Cada etapa vai para o modelo certo (por exemplo,
    extracao no Haiku e recomendacao no Opus).
 
-4. Delega a subagentes, com briefing completo. Confere o resultado e, se
-   vier fraco, refaz um nivel acima.
+4. Delega a subagentes, com briefing completo, so quando ha beneficio real
+   (custo do briefing, tokens, tempo, economia de contexto, paralelismo,
+   custo da revisao). Valida na medida do risco: conferencia rapida
+   (baixa), requisitos e consistencia (media), revisao independente (alta).
+   Se vier fraco, refaz um nivel acima.
 
 5. Manda leitura volumosa para fora da conversa. Varrer pastas, ler varios
    PDFs ou paginas e vasculhar logs vao para um subagente barato, que
@@ -33,11 +36,28 @@ FUNCOES
 6. Alerta quando a sessao fica longa. Sugere abrir uma sessao nova ou
    compactar, uma vez por assunto, numa pausa natural.
 
-7. Avisa a escolha em uma linha antes de comecar, para poder ser corrigida.
+7. Avisa a escolha em uma linha e executa em seguida. O aviso e
+   informativo, nao um pedido de aprovacao. So pede intervencao quando
+   falta autorizacao, informacao essencial, decisao estrategica, ha risco
+   nao autorizado ou gasto extraordinario.
+
+8. Tem fallback quando um modelo nao esta disponivel: busca alternativa
+   equivalente, avisa se a capacidade cair, nunca troca Opus por Haiku em
+   silencio e suspende tarefa critica sem alternativa adequada.
+
+9. Mantem um registro de modelos (modelos.md), separado da politica:
+   alias, ID da API, preco, contexto, capacidades e data da verificacao.
+
+10. Separa tres responsabilidades, de forma logica: ROUTER decide,
+    EXECUTOR executa, VALIDATOR valida. Vale para todos os agentes.
 
 REGRAS DE SEGURANCA
 - Fable nunca entra sozinho: a skill para, explica o motivo e espera a
-  decisao do usuario a cada nova tarefa.
+  decisao do usuario a cada nova tarefa. A autorizacao vale so para a
+  tarefa aprovada; subagente nao autoriza; mencao nao e autorizacao;
+  silencio nunca e aprovacao.
+- Nenhum agente ignora limites de custo, autoriza o nivel 4, altera o
+  escalonamento ou troca de modelo fora da politica.
 - Se o usuario nomear um modelo, a skill usa o que foi pedido.
 - Tarefas minusculas e perguntas rapidas sao respondidas direto.
 - Se o trabalho depende do contexto da conversa, e feito na propria sessao.
