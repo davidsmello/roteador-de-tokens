@@ -1,4 +1,4 @@
-# Roteador de Tokens
+# Roteadora de Modelos Claude
 
 Skill para Claude Code que escolhe o modelo certo para cada tarefa e delega o trabalho a um subagente com esse modelo:
 
@@ -12,7 +12,7 @@ Skill para Claude Code que escolhe o modelo certo para cada tarefa e delega o tr
 ## Instalação
 
 ```bash
-git clone https://github.com/davidsmello/roteador-de-tokens.git ~/.claude/skills/roteador-de-tokens
+git clone https://github.com/davidsmello/roteadora-de-modelos-claude.git ~/.claude/skills/roteadora-de-modelos-claude
 ```
 
-Depois, chame com `/roteador-de-tokens` ou peça para "rotear", "usar o modelo certo" ou "economizar tokens".
+Depois, chame com `/roteadora-de-modelos-claude` ou peça para "rotear", "usar o modelo certo" ou "economizar tokens".
