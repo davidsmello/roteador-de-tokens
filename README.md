@@ -9,6 +9,8 @@ Skill para Claude Code que escolhe o modelo certo para cada tarefa e delega o tr
 - **Sessão longa**: sugere, numa pausa natural, abrir uma sessão nova ou compactar, porque cada turno relê o histórico inteiro
 - **Fable ou superior**: nunca usado sem aprovação, porque consome créditos extras. A skill para, explica o motivo e espera a decisão.
 
+A política fica em `SKILL.md`. O registro de modelos (aliases, IDs da API, preços, contexto, data da última verificação) fica em `modelos.md`, separado, e é o único arquivo a atualizar quando sair modelo novo ou mudar o preço.
+
 ## Instalação
 
 ```bash
