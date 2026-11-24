@@ -61,6 +61,9 @@ REGRAS DE SEGURANCA
 - Se o usuario nomear um modelo, a skill usa o que foi pedido.
 - Tarefas minusculas e perguntas rapidas sao respondidas direto.
 - Se o trabalho depende do contexto da conversa, e feito na propria sessao.
+- Se um comando de shell resolve (contar, listar, ordenar, buscar, comparar
+  tamanhos), roda o comando na propria sessao. Subagente e para ler
+  conteudo em volume, nao para inventario.
 
 QUANDO ACIONA
 O usuario pede para "rotear", "economizar tokens" ou "usar o modelo certo",
