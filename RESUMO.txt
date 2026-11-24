@@ -1,0 +1,59 @@
+ROTEADORA DE MODELOS CLAUDE - RESUMO
+
+O QUE FAZ
+Escolhe o modelo mais barato que resolve cada tarefa com qualidade e mantem
+a conversa principal enxuta. O tamanho da conversa pesa mais no custo que o
+preco do modelo, porque a cada turno todo o historico e relido.
+
+FUNCOES
+
+1. Classifica a tarefa em 4 niveis
+   - Haiku: trabalho mecanico (traduzir, formatar, extrair dados, resumos
+     curtos, leitura volumosa).
+   - Sonnet: trabalho profissional (propostas, sites, scripts, planilhas,
+     marketing).
+   - Opus: trabalho complexo (arquitetura, estrategia, auditoria,
+     seguranca, redes e telecomunicacoes).
+   - Fable ou superior: so em problemas extremos e SOMENTE com o OK do
+     usuario, porque consome creditos extras.
+
+2. Decide pela complexidade real, nao pelo tamanho. Texto longo nao e
+   tarefa dificil. Na duvida, ou se um erro sair caro, sobe um nivel.
+
+3. Divide tarefas mistas. Cada etapa vai para o modelo certo (por exemplo,
+   extracao no Haiku e recomendacao no Opus).
+
+4. Delega a subagentes, com briefing completo. Confere o resultado e, se
+   vier fraco, refaz um nivel acima.
+
+5. Manda leitura volumosa para fora da conversa. Varrer pastas, ler varios
+   PDFs ou paginas e vasculhar logs vao para um subagente barato, que
+   devolve so o que importa.
+
+6. Alerta quando a sessao fica longa. Sugere abrir uma sessao nova ou
+   compactar, uma vez por assunto, numa pausa natural.
+
+7. Avisa a escolha em uma linha antes de comecar, para poder ser corrigida.
+
+REGRAS DE SEGURANCA
+- Fable nunca entra sozinho: a skill para, explica o motivo e espera a
+  decisao do usuario a cada nova tarefa.
+- Se o usuario nomear um modelo, a skill usa o que foi pedido.
+- Tarefas minusculas e perguntas rapidas sao respondidas direto.
+- Se o trabalho depende do contexto da conversa, e feito na propria sessao.
+
+QUANDO ACIONA
+O usuario pede para "rotear", "economizar tokens" ou "usar o modelo certo",
+digita /roteadora-de-modelos-claude, ou chega trabalho em lote, leitura
+pesada ou decisao estrategica.
+
+INSTALACAO
+git clone https://github.com/davidsmello/roteadora-de-modelos-claude.git ~/.claude/skills/roteadora-de-modelos-claude
+
+ATUALIZACAO
+git -C ~/.claude/skills/roteadora-de-modelos-claude pull
+(abrir uma sessao nova do Claude Code para recarregar a skill)
+
+MEDIDA DO RESULTADO
+O relatorio diario de economia de tokens mostra quanto o roteamento poupou
+e qual a fatia de gasto de cada modelo.
