@@ -1,13 +1,13 @@
 ---
-name: roteador-de-tokens
-description: Escolhe o modelo certo (Haiku, Sonnet ou Opus) para cada tarefa, e para e pede a decisão do David antes de usar Fable ou modelo superior, que consome créditos extras. Delega o trabalho a um subagente com esse modelo, para gastar menos sem perder qualidade. Use sempre que o David pedir para "rotear", "usar o modelo certo", "economizar tokens", "mandar pro Haiku/Sonnet/Opus", "qual modelo usar", ou digitar /roteador-de-tokens. Use também quando chegar um lote grande de trabalho mecânico (formatar, traduzir, extrair dados de arquivos, resumir vários textos) que não precisa do modelo mais caro, uma leitura volumosa (varrer uma pasta, ler vários PDFs ou páginas, vasculhar logs) que encheria a conversa principal, uma sessão que já ficou longa, ou uma decisão estratégica pesada que merece o mais capaz, mesmo que ele não fale em modelo.
+name: roteadora-de-modelos-claude
+description: Escolhe o modelo certo (Haiku, Sonnet ou Opus) para cada tarefa, e para e pede a decisão do David antes de usar Fable ou modelo superior, que consome créditos extras. Delega o trabalho a um subagente com esse modelo, para gastar menos sem perder qualidade. Use sempre que o David pedir para "rotear", "usar o modelo certo", "economizar tokens", "mandar pro Haiku/Sonnet/Opus", "qual modelo usar", ou digitar /roteadora-de-modelos-claude. Use também quando chegar um lote grande de trabalho mecânico (formatar, traduzir, extrair dados de arquivos, resumir vários textos) que não precisa do modelo mais caro, uma leitura volumosa (varrer uma pasta, ler vários PDFs ou páginas, vasculhar logs) que encheria a conversa principal, uma sessão que já ficou longa, ou uma decisão estratégica pesada que merece o mais capaz, mesmo que ele não fale em modelo.
 ---
 
-# Roteador de Tokens
+# Roteadora de Modelos Claude
 
 O objetivo é simples: cada tarefa vai para o modelo mais barato que a faz bem. Haiku é rápido e barato, Sonnet é o meio-termo, Opus é o mais capaz e o mais caro. Mandar tudo para o Opus desperdiça dinheiro; mandar estratégia para o Haiku desperdiça a decisão.
 
-Há um segundo custo, que costuma pesar mais que o preço do modelo: **o tamanho da conversa**. A cada turno, todo o histórico é relido. Num dia medido, uma sessão longa no Opus gastou cerca de US$ 10 relendo e guardando histórico, contra US$ 2 de texto gerado. Por isso o roteador cuida de duas coisas: o modelo certo para cada tarefa e uma conversa principal enxuta.
+Há um segundo custo, que costuma pesar mais que o preço do modelo: **o tamanho da conversa**. A cada turno, todo o histórico é relido. Num dia medido, uma sessão longa no Opus gastou cerca de US$ 10 relendo e guardando histórico, contra US$ 2 de texto gerado. Por isso a roteadora cuida de duas coisas: o modelo certo para cada tarefa e uma conversa principal enxuta.
 
 ## 1. Classifique a tarefa
 
