@@ -33,8 +33,16 @@ FUNCOES
    PDFs ou paginas e vasculhar logs vao para um subagente barato, que
    devolve so o que importa.
 
-6. Alerta quando a sessao fica longa. Sugere abrir uma sessao nova ou
-   compactar, uma vez por assunto, numa pausa natural.
+6. Monitora a saude da sessao no inicio de cada tarefa nova. Observa
+   sinais: troca de assunto e compactacao automatica (fortes); muitas horas
+   ou turnos e muitos arquivos lidos na conversa (medios); cache expirado
+   (fraco). Tres estados: verde (segue), amarelo (avisa e oferece resumo),
+   vermelho (recomenda sessao nova e ja entrega o resumo). Avisa no maximo
+   uma vez por assunto, so entre tarefas. Limiares sao estimativas e mais
+   baixos no Opus (modelos.md). Se o usuario preferir seguir na mesma
+   sessao, segue sem insistir e manda a leitura pesada para subagentes
+   baratos. O resumo de passagem traz objetivo, decisoes, arquivos,
+   pendencias e regras do usuario; so cria a sessao nova se ele pedir.
 
 7. Avisa a escolha em uma linha e executa em seguida. O aviso e
    informativo, nao um pedido de aprovacao. So pede intervencao quando
@@ -46,7 +54,8 @@ FUNCOES
    silencio e suspende tarefa critica sem alternativa adequada.
 
 9. Mantem um registro de modelos (modelos.md), separado da politica:
-   alias, ID da API, preco, contexto, capacidades e data da verificacao.
+   alias, ID da API, preco, contexto, capacidades, data da verificacao e
+   limiares de saude da sessao por modelo.
 
 10. Separa tres responsabilidades, de forma logica: ROUTER decide,
     EXECUTOR executa, VALIDATOR valida. Vale para todos os agentes.
