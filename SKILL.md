@@ -23,6 +23,7 @@ Por isso a roteadora cuida de duas coisas: o modelo certo para cada tarefa e uma
 - Não transfira o histórico completo para subagentes: passe um briefing.
 - Reutilize resultados intermediários em vez de refazer a análise.
 - Monitore tokens de entrada, cache, saída e custo total (o relatório diário de economia de tokens mostra isso).
+- Acompanhe a saúde da sessão (seção 8): sinais, estados verde/amarelo/vermelho e resumo de passagem.
 
 Escale o modelo quando a complexidade superar o modelo atual, quando o resultado trouxer erros ou inconsistências, quando a tarefa exigir raciocínio mais profundo, tiver muitas dependências ou etapas, ou quando a precisão importar mais que a velocidade.
 
@@ -156,13 +157,51 @@ Peça a intervenção do David **somente** quando houver:
 
 Fora disso, siga sem perguntar.
 
-## 8. Sessão longa: sugira recomeçar
+## 8. Saúde da sessão: monitore e sugira recomeçar
 
-Quanto mais longa a conversa, mais caro fica cada turno. Quando a sessão já acumulou muito (várias horas de trabalho, muitos arquivos lidos, ou uma troca para um assunto que não depende do que veio antes), sugira numa linha:
+Quanto mais longa a conversa, mais caro fica cada turno (seção 1). Verifique a saúde da sessão **no início de cada tarefa nova**, não a cada mensagem.
+
+### Sinais
+
+| Sinal | Peso |
+|---|---|
+| Troca para assunto que não depende do anterior | Forte (sozinho já vale um aviso) |
+| Compactação automática já rodou, ou o app avisa que o contexto está enchendo | Forte |
+| Mais de ~1 a 2 h de trabalho pesado, ou mais de ~100 turnos | Médio |
+| Muitos arquivos ou saídas longas lidos na conversa principal | Médio |
+| Sessão parada por muito tempo (o cache expirou) | Fraco, só reforça |
+
+Os limites numéricos são **estimativas**, não medições. Calibre pelo relatório de economia de tokens. Os limiares por modelo estão em [modelos.md](modelos.md).
+
+### Estados e ação
+
+- **Verde:** nenhum sinal forte. Siga normalmente, sem comentar.
+- **Amarelo:** um sinal forte, ou dois médios. Numa pausa natural, avise numa linha e ofereça o resumo.
+- **Vermelho:** dois ou mais sinais fortes. Recomende abrir sessão nova antes da próxima tarefa e já entregue o resumo pronto.
+
+Aviso padrão:
 
 > Esta conversa já está longa e cada passo relê tudo. Para o próximo assunto, vale abrir uma sessão nova; se precisar continuar aqui, posso compactar.
 
-Sugira no máximo uma vez por assunto, e só numa pausa natural (uma tarefa terminou e outra vai começar), nunca no meio de um trabalho. Se o David preferir seguir, siga sem insistir. Ao sugerir uma sessão nova, ofereça um resumo curto do que levar (decisões, arquivos, próximos passos).
+### Regras de conduta
+
+- Avise no máximo uma vez por assunto, só entre tarefas (uma terminou, outra vai começar), nunca no meio de um trabalho.
+- Se o David preferir seguir na mesma sessão, siga sem insistir e passe a mandar a leitura pesada para subagentes Haiku (seção 5).
+  - **Se a tarefa seguinte for pesada** (muitos arquivos, logs ou PDFs): mande toda a leitura volumosa a subagentes Haiku, ou Sonnet se exigir julgamento, e traga para a conversa principal só o resultado enxuto, com o caminho de cada trecho.
+  - Se a tarefa for de outro assunto, sem dependência do que veio antes, diga numa linha que o custo de seguir aqui é maior, mas execute sem repetir o aviso.
+  - Não leia nada grande na conversa principal nem releia o que já foi lido; reutilize os resultados intermediários.
+- No Opus o limiar é mais baixo, porque o token é mais caro; no Haiku e no Sonnet, mais alto.
+- Por padrão, entregue o resumo como texto para o David colar. Só crie a sessão nova (no app) se ele pedir.
+
+### Resumo de passagem
+
+Quando o estado for amarelo ou vermelho, gere este bloco:
+
+- **Objetivo:** uma frase.
+- **Decisões tomadas:** e o motivo de cada uma.
+- **Arquivos:** envolvidos, com caminho completo.
+- **Pendências e próximo passo.**
+- **Regras do David que valem para o assunto:** idioma, tom de marca, skills a usar.
 
 ## 9. Papel e governança
 

@@ -19,3 +19,13 @@ Observações:
 - A coluna "Na ferramenta Agent" vem do esquema da própria ferramenta nesta sessão, que aceita `haiku`, `sonnet`, `opus` e `fable`. Se a ferramenta deixar de aceitar um alias, aplique a política de fallback (seção 5).
 - Em Bedrock, Vertex e Foundry os IDs e preços podem diferir. Este registro vale para a API da Anthropic.
 - Fable 5.2 e o Mythos 5.2 exigem retenção de dados de 30 dias; contas sem isso recebem erro. Mais um motivo para o nível 4 ser decisão consciente.
+
+## Limiares de saúde da sessão (estimativas)
+
+Usados pela seção 8 da `SKILL.md`. São estimativas, não medições: calibre pelo relatório de economia de tokens.
+
+| Alias | Turnos (aviso amarelo) | Horas de trabalho pesado (aviso amarelo) |
+|---|---|---|
+| `haiku` | ~150 | ~2 a 3 h |
+| `sonnet` | ~100 | ~1,5 a 2 h |
+| `opus` | ~70 | ~1 a 1,5 h |
