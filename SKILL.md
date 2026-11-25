@@ -166,6 +166,7 @@ Quanto mais longa a conversa, mais caro fica cada turno (seção 1). Verifique a
 | Sinal | Peso |
 |---|---|
 | Troca para assunto que não depende do anterior | Forte (sozinho já vale um aviso) |
+| Sessão perdendo o assunto: a conversa se espalhou por vários temas, ou as respostas começam a ignorar decisões anteriores | Forte |
 | Compactação automática já rodou, ou o app avisa que o contexto está enchendo | Forte |
 | Mais de ~1 a 2 h de trabalho pesado, ou mais de ~100 turnos | Médio |
 | Muitos arquivos ou saídas longas lidos na conversa principal | Médio |
@@ -176,8 +177,10 @@ Os limites numéricos são **estimativas**, não medições. Calibre pelo relat�
 ### Estados e ação
 
 - **Verde:** nenhum sinal forte. Siga normalmente, sem comentar.
-- **Amarelo:** um sinal forte, ou dois médios. Numa pausa natural, avise numa linha e ofereça o resumo.
-- **Vermelho:** dois ou mais sinais fortes. Recomende abrir sessão nova antes da próxima tarefa e já entregue o resumo pronto.
+- **Amarelo:** um sinal forte, ou dois médios. Notifique o David e aguarde a ação desejada.
+- **Vermelho:** dois ou mais sinais fortes. Notifique o David, recomende abrir sessão nova, já entregue o resumo pronto e aguarde a ação desejada.
+
+**Notifique sempre e aguarde.** Em amarelo ou vermelho, pare antes da próxima tarefa, diga em uma linha o motivo (sessão longa, perdendo o assunto, compactação etc.) e pergunte o que ele quer fazer, com as opções: abrir sessão nova com o resumo, compactar, ou seguir nesta sessão. No app, use a pergunta com botões. Não execute a próxima tarefa até ele responder. O silêncio não é resposta: continue aguardando.
 
 Aviso padrão:
 
@@ -186,9 +189,9 @@ Aviso padrão:
 ### Regras de conduta
 
 - Avise no máximo uma vez por assunto, só entre tarefas (uma terminou, outra vai começar), nunca no meio de um trabalho.
-- Se o David preferir seguir na mesma sessão, siga sem insistir e passe a mandar a leitura pesada para subagentes Haiku (seção 5).
+- Depois da resposta do David, cumpra a ação escolhida. Se ele preferir seguir na mesma sessão, siga sem insistir e passe a mandar a leitura pesada para subagentes Haiku (seção 5).
   - **Se a tarefa seguinte for pesada** (muitos arquivos, logs ou PDFs): mande toda a leitura volumosa a subagentes Haiku, ou Sonnet se exigir julgamento, e traga para a conversa principal só o resultado enxuto, com o caminho de cada trecho.
-  - Se a tarefa for de outro assunto, sem dependência do que veio antes, diga numa linha que o custo de seguir aqui é maior, mas execute sem repetir o aviso.
+  - Se a tarefa for de outro assunto, sem dependência do que veio antes, ele já foi avisado: execute sem repetir o aviso.
   - Não leia nada grande na conversa principal nem releia o que já foi lido; reutilize os resultados intermediários.
 - No Opus o limiar é mais baixo, porque o token é mais caro; no Haiku e no Sonnet, mais alto.
 - Por padrão, entregue o resumo como texto para o David colar. Só crie a sessão nova (no app) se ele pedir.

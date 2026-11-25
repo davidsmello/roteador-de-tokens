@@ -35,11 +35,14 @@ FUNCOES
 
 6. Monitora a saude da sessao no inicio de cada tarefa nova. Observa
    sinais: troca de assunto e compactacao automatica (fortes); muitas horas
-   ou turnos e muitos arquivos lidos na conversa (medios); cache expirado
-   (fraco). Tres estados: verde (segue), amarelo (avisa e oferece resumo),
-   vermelho (recomenda sessao nova e ja entrega o resumo). Avisa no maximo
+   ou turnos e muitos arquivos lidos na conversa (medios); sessao perdendo
+   o assunto (forte); cache expirado
+   (fraco). Tres estados: verde (segue), amarelo (notifica e aguarda a
+   acao do usuario), vermelho (notifica, recomenda sessao nova, entrega o
+   resumo e aguarda). Em ambos, para antes da proxima tarefa e pergunta:
+   sessao nova, compactar ou seguir. Silencio nao e resposta. Avisa no maximo
    uma vez por assunto, so entre tarefas. Limiares sao estimativas e mais
-   baixos no Opus (modelos.md). Se o usuario preferir seguir na mesma
+   baixos no Opus (modelos.md). Se o usuario escolher seguir na mesma
    sessao, segue sem insistir e manda a leitura pesada para subagentes
    baratos. O resumo de passagem traz objetivo, decisoes, arquivos,
    pendencias e regras do usuario; so cria a sessao nova se ele pedir.
