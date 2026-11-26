@@ -170,7 +170,9 @@ Quanto mais longa a conversa, mais caro fica cada turno (seção 1). Verifique a
 | Compactação automática já rodou, ou o app avisa que o contexto está enchendo | Forte |
 | Mais de ~1 a 2 h de trabalho pesado, ou mais de ~100 turnos | Médio |
 | Muitos arquivos ou saídas longas lidos na conversa principal | Médio |
-| Sessão parada por muito tempo (o cache expirou) | Fraco, só reforça |
+| Retomada depois de pausa longa (mais de ~1 h parada) numa sessão já grande: o cache expirou e o histórico inteiro será reprocessado a preço cheio | Médio (fraco se a sessão ainda for curta) |
+
+Medido numa sessão real no Opus: retomar depois de ~17 h parada recriou 264 mil tokens de cache, e depois de ~2 h, 342 mil. Por isso, ao retomar depois de pausa longa, o aviso vem **antes de qualquer trabalho** e oferece o resumo de passagem como saída mais barata.
 
 Os limites numéricos são **estimativas**, não medições. Calibre pelo relatório de economia de tokens. Os limiares por modelo estão em [modelos.md](modelos.md).
 
