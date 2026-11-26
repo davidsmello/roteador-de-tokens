@@ -9,6 +9,19 @@ description: Escolhe o modelo certo (Haiku, Sonnet ou Opus) para cada tarefa, e 
 
 **Princípio central:** máxima autonomia operacional, com controle de custos, qualidade e autorização do David.
 
+## Antes de começar: há atualização?
+
+Na **primeira vez** que esta skill for usada numa sessão (e só nela), rode na própria sessão:
+
+```bash
+d="$HOME/.claude/skills/roteadora-de-modelos-claude"; GIT_TERMINAL_PROMPT=0 git -C "$d" -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=5 fetch -q 2>/dev/null && git -C "$d" rev-list --count 'HEAD..@{upstream}' 2>/dev/null
+```
+
+- **Número maior que 0:** avise em uma linha e siga com a tarefa: "Há atualização da roteadora disponível. Para atualizar: `git -C ~/.claude/skills/roteadora-de-modelos-claude pull`, e abra uma sessão nova."
+- **0 ou nenhuma saída** (sem internet, instalação sem git): siga sem comentar.
+
+Só avise. Não rode o `pull` por conta própria: quem decide atualizar é o usuário.
+
 ## 1. Princípio fundamental
 
 Use sempre o modelo de menor custo e menor complexidade capaz de entregar o resultado esperado com qualidade. Não use modelos avançados em tarefas simples, e nunca presuma que o mais caro é o melhor para tudo.

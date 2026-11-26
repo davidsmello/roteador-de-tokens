@@ -18,3 +18,13 @@ git clone https://github.com/davidsmello/roteadora-de-modelos-claude.git ~/.clau
 ```
 
 Depois, chame com `/roteadora-de-modelos-claude` ou peça para "rotear", "usar o modelo certo" ou "economizar tokens".
+
+## Atualização
+
+No primeiro uso de cada sessão, a skill verifica no GitHub se há versão nova e avisa. Ela não atualiza sozinha:
+
+```bash
+git -C ~/.claude/skills/roteadora-de-modelos-claude pull
+```
+
+Depois, abra uma sessão nova do Claude Code. Quem instalou antes desta verificação precisa rodar o comando uma vez para passar a receber o aviso.

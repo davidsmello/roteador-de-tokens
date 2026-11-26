@@ -89,6 +89,8 @@ git clone https://github.com/davidsmello/roteadora-de-modelos-claude.git ~/.clau
 ATUALIZACAO
 git -C ~/.claude/skills/roteadora-de-modelos-claude pull
 (abrir uma sessao nova do Claude Code para recarregar a skill)
+No primeiro uso de cada sessao, a skill verifica se ha versao nova no GitHub
+e avisa; nao atualiza sozinha.
 
 MEDIDA DO RESULTADO
 O relatorio diario de economia de tokens mostra quanto o roteamento poupou
